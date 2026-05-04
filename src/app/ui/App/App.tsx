@@ -1,7 +1,11 @@
 
-import { Header } from '@/app/common/components'
+
 import s from './App.module.css'
-import { Routing } from '@/app/common/routing'
+
+import { Header } from '@/common/components'
+import { Routing } from '@/common/routing'
+
+
 
 export const App = () => {
   return (
