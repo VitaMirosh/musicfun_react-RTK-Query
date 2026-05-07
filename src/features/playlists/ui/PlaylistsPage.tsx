@@ -5,6 +5,7 @@ import { type ChangeEvent, useState } from 'react'
 import { useDebounceValue } from '@/common/hooks'
 import { Pagination } from '@/common/components'
 import { PlaylistList } from '@/features/playlists/ui/PlaylistList/PlaylistList.tsx'
+import { toast } from 'react-toastify'
 
 export const PlaylistsPage = () => {
   const [search, setSearch] = useState('')
@@ -12,12 +13,21 @@ export const PlaylistsPage = () => {
   const [pageSize, setPageSize] = useState(2)
 
   const debounceSearch = useDebounceValue(search)
-  const { data, isLoading } = useFetchPlaylistsQuery({
+  const { data, isLoading, error } = useFetchPlaylistsQuery({
     search: debounceSearch,
     pageNumber: currentPage,
     pageSize: pageSize,
   })
 
+  if (error) {
+    if ('status' in error) {
+      const errorMsg = 'error' in error ? error.error :( error.data as {error: string}).error || ( error.data as {message: string}).message || 'Some error occurred'
+      toast(errorMsg, { type: 'error', theme: 'colored' })
+    } else {
+      const errorMsg =  error.message || 'Some error occurred'
+      toast(errorMsg, { type: 'error', theme: 'colored' })
+    }
+  }
   const changePageSizeHandler = (size: number) => {
     setCurrentPage(1)
     setPageSize(size)
@@ -26,6 +36,7 @@ export const PlaylistsPage = () => {
     setSearch(e.currentTarget.value)
     setCurrentPage(1)
   }
+  if (isLoading) return <h1>Skeleton loader...</h1>
 
   return (
     <div className={s.container}>
