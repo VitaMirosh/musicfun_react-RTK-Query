@@ -1,4 +1,6 @@
 export {getPaginationPages} from './getPaginationPages.ts'
-export {isErrorWithMessage} from './isErrorWithMassage.ts'
-export {isErrorWithError} from './isErrorWithError.ts'
 export {isErrorWithProperty} from './isErrorWithProperty.ts'
+export { isErrorWithDetailArray} from './isErrorWithDetailArray.ts'
+export {trimToMaxLength} from './trimToMaxLength.ts'
+export {handelErrors} from './handelErrors.ts'
+export {errorToast} from './errorToast.ts'
